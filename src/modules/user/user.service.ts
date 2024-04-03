@@ -7,9 +7,9 @@ import { Repository } from 'sequelize-typescript';
 @Injectable()
 export class UserService {
 
-  constructor (
+  constructor(
     @Inject('USER_REPOSITORY') private readonly userRepository: Repository<User>
-  ) {}
+  ) { }
 
   async create(createUserDto: CreateUserDto) {
     return await this.userRepository.create<User>(createUserDto);
@@ -20,7 +20,19 @@ export class UserService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} user`;
+    return this.userRepository.findByPk(id);
+  }
+
+  async findOneByEmail(email: string): Promise<User> {
+    return await this.userRepository.findOne<User>({ where: { email } });
+  }
+
+  async findOneByUsername(username: string): Promise<User> {
+    return await this.userRepository.findOne<User>({ where: { username } });
+  }
+
+  async findOneById(id: number): Promise<User> {
+    return await this.userRepository.findOne<User>({ where: { id } });
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
