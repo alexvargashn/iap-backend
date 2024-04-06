@@ -6,6 +6,7 @@ import { DatabaseModule } from 'src/core/database/database.module';
 import { UserModule } from './modules/user/user.module';
 import { Repository } from 'src/core/database/repository';
 import { AuthModule } from './modules/auth/auth.module';
+import { PostModule } from './modules/post/post.module';
 
 @Global()
 @Module({ 
@@ -13,7 +14,8 @@ import { AuthModule } from './modules/auth/auth.module';
     ConfigModule.forRoot({ isGlobal: true }),
     DatabaseModule,
     UserModule,
-    AuthModule
+    AuthModule,
+    PostModule
   ],
   exports: [DatabaseModule],
   controllers: [AppController],

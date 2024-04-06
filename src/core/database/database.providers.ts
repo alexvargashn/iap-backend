@@ -2,6 +2,7 @@ import { Sequelize } from 'sequelize-typescript';
 import { SEQUELIZE, DEVELOPMENT, TEST, PRODUCTION } from '../constants';
 import { databaseConfig } from './database.config';
 import { User } from 'src/modules/user/entities/user.entity';
+import { Post } from 'src/modules/post/entities/post.entity';
 
 export const databaseProviders = [{
     provide: SEQUELIZE,
@@ -21,7 +22,10 @@ export const databaseProviders = [{
            config = databaseConfig.development;
         }
         const sequelize = new Sequelize({repositoryMode: true, ...config});
-        sequelize.addModels([User])
+        sequelize.addModels([
+         User,
+         Post
+      ])
         await sequelize.sync();
         return sequelize;
     },
