@@ -1,10 +1,8 @@
 import { Inject, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Repository, Sequelize } from 'sequelize-typescript';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from './entities/user.entity';
-import { Repository, Sequelize } from 'sequelize-typescript';
-import { CLIENT_RENEG_LIMIT } from 'tls';
-import { UserDto } from './dto/user.dto';
+import { User } from './entities/user.entity';import { UserDto } from './dto/user.dto';
 import { error } from 'console';
 import { SEQUELIZE } from 'src/core/constants';
 
@@ -12,10 +10,11 @@ import { SEQUELIZE } from 'src/core/constants';
 export class UserService {
 
   constructor(
+   // @Inject(SEQUELIZE) private readonly sequelize: Sequelize,
     @Inject(SEQUELIZE) private readonly sequelize: Sequelize,
 
     @Inject('USER_REPOSITORY') private readonly userRepository: Repository<User>
-  ) { }
+  ) {  }
 
   /**
    * @description Create a user at database and returns it.
@@ -70,6 +69,6 @@ export class UserService {
   }
 
   private handleDBErrors(_error: any) {
-    throw new InternalServerErrorException
+    throw new InternalServerErrorException;
   }
 }

@@ -1,22 +1,13 @@
 import { Module } from '@nestjs/common';
-import { UserService } from './user.service';
 import { UserController } from './user.controller';
-import { Repository } from 'src/core/database/repository';
-import { DatabaseModule } from 'src/core/database/database.module';
+import { UserService } from './user.service';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [],
   exports: [UserService],
   controllers: [UserController],
   providers: [
-    UserService,
-    {
-      provide: 'USER_REPOSITORY',
-      useFactory: (repository: Repository) => {
-        return repository.getRepository('User');
-      },
-      inject: [Repository]
-    } 
+    UserService
   ],
 })
 export class UserModule {}
