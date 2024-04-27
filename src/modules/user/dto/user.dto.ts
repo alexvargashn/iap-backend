@@ -1,9 +1,11 @@
-import { IsEmail, IsEnum, IsNotEmpty, IsString, Matches, MaxLength, MinLength } from 'class-validator';
-import { Gender } from '../enum/gender.enum';
+import { IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString, Matches, MaxLength, MinLength } from "class-validator";
+import { Gender } from "../enum/gender.enum";
 
 
+export class UserDto {
 
-export class CreateUserDto {
+    @IsString()
+    id?: string;
 
     @IsString()
     @IsNotEmpty()
@@ -20,18 +22,26 @@ export class CreateUserDto {
     email: string;
 
     @IsString()
-    @IsNotEmpty()
+    @IsOptional()
     @MinLength(6)
     @MaxLength(50)
     @Matches(
         /(?:(?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
         message: 'The password must have a Uppercase, lowercase letter and a number'
     })
-    password: string;
+    password?: string;
 
     @IsNotEmpty()
     @IsEnum(Gender, {
         message: 'gender must be either male or female',
     })
     gender: string;
+
+    @IsString()
+    @IsOptional()
+    createdAt?: string
+
+    @IsString()
+    @IsOptional()
+    updatedAt?: string
 }

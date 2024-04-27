@@ -7,6 +7,7 @@ import { UserModule } from './modules/user/user.module';
 import { Repository } from 'src/core/database/repository';
 import { AuthModule } from './modules/auth/auth.module';
 import { PostModule } from './modules/post/post.module';
+import { CommonModule } from './modules/common/common.module';
 
 @Global()
 @Module({ 
@@ -15,10 +16,11 @@ import { PostModule } from './modules/post/post.module';
     DatabaseModule,
     UserModule,
     AuthModule,
-    PostModule
+    PostModule,
+    CommonModule
   ],
   exports: [DatabaseModule],
   controllers: [AppController],
-  providers: [AppService, Repository],
+  providers: [AppService],
 })
 export class AppModule {}

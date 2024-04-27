@@ -1,32 +1,22 @@
-import { Sequelize } from 'sequelize-typescript';
 import { SEQUELIZE, DEVELOPMENT, TEST, PRODUCTION } from '../constants';
-import { databaseConfig } from './database.config';
-import { User } from 'src/modules/user/entities/user.entity';
-import { Post } from 'src/modules/post/entities/post.entity';
+import { getconfigMode } from './utils/getConfigMode';
+import { getSequelizeInstance } from './utils/getSequelizeInstance';
+import { RepositoryProvider, loadRepositories } from './repository.provider';
+
+
+let config = getconfigMode();
+
+let sequelize =   getSequelizeInstance(config).then(sequelize => sequelize);
+
+
+export const repositoryProvider: RepositoryProvider[] = loadRepositories(sequelize);
+
 
 export const databaseProviders = [{
-    provide: SEQUELIZE,
-    useFactory: async () => {
-        let config;
-        switch (process.env.NODE_ENV) {
-        case DEVELOPMENT:
-           config = databaseConfig.development;
-           break;
-        case TEST:
-           config = databaseConfig.test;
-           break;
-        case PRODUCTION:
-           config = databaseConfig.production;
-           break;
-        default:
-           config = databaseConfig.development;
-        }
-        const sequelize = new Sequelize({repositoryMode: true, ...config});
-        sequelize.addModels([
-         User,
-         Post
-      ])
-        await sequelize.sync();
-        return sequelize;
-    },
-}]; 
+   provide: SEQUELIZE,
+   useFactory: async () => {
+
+      return sequelize;
+   },
+}];
+
